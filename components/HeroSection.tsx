@@ -1,17 +1,19 @@
-import Image from "next/image";
 import { Button } from "@/components/Button";
 
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden rounded-2xl shadow-card">
-      <Image
-        src="/images/hero.jpg"
-        alt="Klubbens medlemmer ved møllen"
-        width={1600}
-        height={900}
+      <video
         className="h-[420px] w-full object-cover"
-        priority
-      />
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        poster="/images/hero.jpg"
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-gradient-to-r from-black/65 to-black/20" />
       <div className="absolute inset-0 flex items-end">
         <div className="max-w-2xl p-8 text-white md:p-12">

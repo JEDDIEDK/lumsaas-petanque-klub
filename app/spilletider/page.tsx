@@ -64,14 +64,14 @@ export default async function SpilletiderPage() {
         <div className="mt-4 overflow-hidden rounded-lg border border-black/10">
           <iframe
             title="Lumsås Petanque Klub placering"
-            src="https://www.google.com/maps?q=Lums%C3%A5s%20Petanque%20Klub&output=embed"
+            src="https://www.google.com/maps?q=55.9398659,11.5162344&z=17&output=embed"
             className="h-80 w-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
         <a
-          href="https://maps.app.goo.gl/fRKyPKn31n66jwVP6"
+          href="https://maps.app.goo.gl/dG35spdujiTSUWVE6"
           target="_blank"
           rel="noreferrer"
           className="mt-4 inline-flex rounded-md bg-moss px-4 py-2 text-sm font-semibold text-white hover:bg-[#3f4f31]"

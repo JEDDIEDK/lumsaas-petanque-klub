@@ -12,10 +12,9 @@ export default function KontaktPage() {
       <section className="rounded-xl bg-white p-6 shadow-card">
         <h1 className="text-4xl font-bold">Kontakt</h1>
         <div className="mt-5 space-y-3 text-stone">
-          <p><strong>Formand:</strong> Navn Efternavn (placeholder)</p>
-          <p><strong>Email:</strong> kontakt@lumsaaspetanque.dk</p>
-          <p><strong>Telefon:</strong> +45 12 34 56 78</p>
-          <p><strong>Adresse:</strong> Lumsås, Odsherred</p>
+          <p><strong>Formand:</strong> Fie Boeckel</p>
+          <p><strong>E-mail:</strong> fieboeckel@gmail.com</p>
+          <p><strong>Telefon:</strong> 30 54 90 63</p>
         </div>
       </section>
       <InquiryForm compact />

@@ -10,7 +10,6 @@ export function HeroSection() {
         muted
         playsInline
         preload="metadata"
-        poster="/images/hero.jpg"
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
       </video>

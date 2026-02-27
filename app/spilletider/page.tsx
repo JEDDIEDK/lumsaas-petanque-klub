@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 
 export default async function SpilletiderPage() {
   await ensureSeedEvents();
-  const events = await getUpcomingEvents(10);
+  const events = await getUpcomingEvents(6);
   const attendance = await db.attendance.findMany({
     where: { eventId: { in: events.map((e) => e.id) } }
   });
@@ -36,7 +36,7 @@ export default async function SpilletiderPage() {
         <OpeningHoursCard showImage />
 
         <aside className="h-full rounded-xl bg-white p-6 shadow-card">
-          <h2 className="text-2xl font-bold">Kommende 10 spilledage</h2>
+          <h2 className="text-2xl font-bold">Kommende 6 spilledage</h2>
           <p className="mt-2 text-stone">Opdateres løbende. Viser kun antal tilmeldte, ikke hvem.</p>
           <div className="mt-4 space-y-3">
             {events.map((event) => {

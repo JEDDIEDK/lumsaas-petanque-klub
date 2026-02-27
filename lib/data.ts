@@ -21,20 +21,34 @@ export const getUpcomingEvents = async (limit = 10): Promise<EventType[]> => {
 };
 
 export const ensureSeedEvents = async () => {
-  const count = await db.event.count();
-  if (count > 0) return;
-
-  const base = new Date();
-  const makeDate = (days: number) => addDays(new Date(base.toDateString()), days).toISOString().slice(0, 10);
-
-  await db.event.createMany({
-    data: [
-      { date: makeDate(2), startTime: "14:00", type: "Træning", note: "Nye spillere velkomne" },
-      { date: makeDate(6), startTime: "10:00", type: "Lørdagsspil", note: "Social turnering" },
-      { date: makeDate(9), startTime: "14:00", type: "Træning", note: "Kasteøvelser" },
-      { date: makeDate(13), startTime: "14:00", type: "Træning", note: "Hygge og spil" }
-    ]
+  const upcoming = await db.event.findMany({
+    where: { date: { gte: new Date(new Date().toDateString()) } },
+    orderBy: [{ date: "asc" }]
   });
+  if (upcoming.length >= 6) return;
+
+  const base = new Date(new Date().toDateString());
+  const existingDates = new Set(upcoming.map((e) => e.date.toISOString().slice(0, 10)));
+  const templates = [
+    { offset: 2, startTime: "14:00", type: "Træning", note: "Nye spillere velkomne" },
+    { offset: 6, startTime: "10:00", type: "Lørdagsspil", note: "Social turnering" },
+    { offset: 9, startTime: "14:00", type: "Træning", note: "Kasteøvelser" },
+    { offset: 13, startTime: "14:00", type: "Træning", note: "Hygge og spil" },
+    { offset: 16, startTime: "10:00", type: "Lørdagsspil", note: "Åben træning" },
+    { offset: 20, startTime: "14:00", type: "Træning", note: "Teknik og hygge" },
+    { offset: 23, startTime: "14:00", type: "Træning", note: "Fri makkertrækning" },
+    { offset: 27, startTime: "10:00", type: "Lørdagsspil", note: "Social runde" }
+  ];
+
+  const toCreate = templates
+    .map((t) => ({ ...t, date: addDays(base, t.offset).toISOString().slice(0, 10) }))
+    .filter((t) => !existingDates.has(t.date))
+    .slice(0, Math.max(0, 6 - upcoming.length))
+    .map(({ date, startTime, type, note }) => ({ date, startTime, type, note }));
+
+  if (toCreate.length) {
+    await db.event.createMany({ data: toCreate });
+  }
 };
 
 export const getLatestAnnouncements = async (_limit = 5): Promise<AnnouncementType[]> => {

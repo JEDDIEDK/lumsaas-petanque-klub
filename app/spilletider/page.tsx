@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { addDays } from "date-fns";
 import { OpeningHoursCard } from "@/components/OpeningHoursCard";
 import { db } from "@/lib/db";
-import { ensureSeedEvents, getUpcomingEvents } from "@/lib/data";
+import { getUpcomingEvents } from "@/lib/data";
 import { fmtDate, fmtTime } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -12,11 +13,30 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function SpilletiderPage() {
-  await ensureSeedEvents();
-  const events = await getUpcomingEvents(6);
-  const attendance = await db.attendance.findMany({
-    where: { eventId: { in: events.map((e) => e.id) } }
-  });
+  const base = new Date(new Date().toDateString());
+  const fallbackEvents = [2, 6, 9, 13, 16, 20].map((offset, idx) => ({
+    id: -(idx + 1),
+    date: addDays(base, offset).toISOString().slice(0, 10),
+    start_time: offset % 2 === 0 ? "14:00" : "10:00",
+    type: offset % 2 === 0 ? "Træning" : "Lørdagsspil",
+    note: null,
+    created_at: new Date().toISOString()
+  }));
+
+  let events = fallbackEvents;
+  let attendance: Array<{ eventId: number; status: string }> = [];
+
+  try {
+    const dynamicEvents = await getUpcomingEvents(6);
+    if (dynamicEvents.length) {
+      events = dynamicEvents;
+      attendance = await db.attendance.findMany({
+        where: { eventId: { in: events.map((e) => e.id) } }
+      });
+    }
+  } catch {
+    // Keep fallback events and zero-count attendance if the runtime store is unavailable.
+  }
 
   const countByEvent = new Map<number, { yes: number; maybe: number; no: number }>();
   for (const event of events) {

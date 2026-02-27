@@ -4,6 +4,7 @@ import { OpeningHoursCard } from "@/components/OpeningHoursCard";
 import { db } from "@/lib/db";
 import { getUpcomingEvents } from "@/lib/data";
 import { fmtDate, fmtTime } from "@/lib/utils";
+import type { EventType } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Spilletider",
@@ -14,16 +15,16 @@ export const dynamic = "force-dynamic";
 
 export default async function SpilletiderPage() {
   const base = new Date(new Date().toDateString());
-  const fallbackEvents = [2, 6, 9, 13, 16, 20].map((offset, idx) => ({
+  const fallbackEvents: EventType[] = [2, 6, 9, 13, 16, 20].map((offset, idx) => ({
     id: -(idx + 1),
     date: addDays(base, offset).toISOString().slice(0, 10),
     start_time: offset % 2 === 0 ? "14:00" : "10:00",
     type: offset % 2 === 0 ? "Træning" : "Lørdagsspil",
-    note: null,
+    note: null as string | null,
     created_at: new Date().toISOString()
   }));
 
-  let events = fallbackEvents;
+  let events: EventType[] = fallbackEvents;
   let attendance: Array<{ eventId: number; status: string }> = [];
 
   try {

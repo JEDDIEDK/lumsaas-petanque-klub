@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { cn } from "@/lib/utils";
 import type { GalleryImage } from "@/lib/types";
 
 type Props = {
@@ -10,37 +9,16 @@ type Props = {
   enableFilter?: boolean;
 };
 
-const filters = ["Alle", "Træning", "Turnering", "Hygge"] as const;
-
 export function GalleryGrid({ images, enableFilter = false }: Props) {
-  const [activeFilter, setActiveFilter] = useState<(typeof filters)[number]>("Alle");
   const [activeImage, setActiveImage] = useState<GalleryImage | null>(null);
 
   const filtered = useMemo(() => {
-    if (!enableFilter || activeFilter === "Alle") return images;
-    return images.filter((img) => img.name.toLowerCase().includes(activeFilter.toLowerCase()));
-  }, [activeFilter, enableFilter, images]);
+    if (!enableFilter) return images;
+    return images;
+  }, [enableFilter, images]);
 
   return (
     <div>
-      {enableFilter ? (
-        <div className="mb-6 flex flex-wrap gap-2">
-          {filters.map((f) => (
-            <button
-              key={f}
-              type="button"
-              onClick={() => setActiveFilter(f)}
-              className={cn(
-                "rounded-full border px-4 py-2 text-sm",
-                activeFilter === f ? "border-moss bg-moss text-white" : "border-black/10 bg-white"
-              )}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-      ) : null}
-
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((img) => (
           <button

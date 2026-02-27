@@ -1,0 +1,94 @@
+{
+  "users": [
+    {
+      "name": "John Eddie Møller",
+      "email": "john@jeddie.dk",
+      "phone": "26252200",
+      "passwordHash": "$2a$10$sCfkRLRq0GZtVGZGiszwZOzflbj7cFVPBY.5SyLN.3aTdIHkvt8fC",
+      "role": "admin",
+      "id": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "createdAt": "2026-02-26T18:39:38.541Z"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "758335d7-22df-410d-a05a-9f1d02a614c7",
+      "userId": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "expiresAt": "2026-03-28T19:09:36.588Z",
+      "id": "cb985340-0d0c-4528-a2ce-ad7af068928b",
+      "createdAt": "2026-02-26T19:09:36.588Z"
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-02-27T23:00:00.000Z",
+      "startTime": "14:00",
+      "type": "Træning",
+      "note": "Nye spillere velkomne",
+      "id": 1,
+      "createdAt": "2026-02-26T18:42:53.729Z"
+    },
+    {
+      "date": "2026-03-03T23:00:00.000Z",
+      "startTime": "10:00",
+      "type": "Lørdagsspil",
+      "note": "Social turnering",
+      "id": 2,
+      "createdAt": "2026-02-26T18:42:53.729Z"
+    },
+    {
+      "date": "2026-03-06T23:00:00.000Z",
+      "startTime": "14:00",
+      "type": "Træning",
+      "note": "Kasteøvelser",
+      "id": 3,
+      "createdAt": "2026-02-26T18:42:53.729Z"
+    },
+    {
+      "date": "2026-03-10T23:00:00.000Z",
+      "startTime": "14:00",
+      "type": "Træning",
+      "note": "Hygge og spil",
+      "id": 4,
+      "createdAt": "2026-02-26T18:42:53.729Z"
+    }
+  ],
+  "attendances": [
+    {
+      "eventId": 2,
+      "userId": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "status": "yes",
+      "comment": "Tager basser med",
+      "id": 1,
+      "updatedAt": "2026-02-26T19:11:37.883Z"
+    },
+    {
+      "eventId": 3,
+      "userId": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "status": "no",
+      "comment": null,
+      "id": 2,
+      "updatedAt": "2026-02-26T19:11:43.534Z"
+    },
+    {
+      "eventId": 4,
+      "userId": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "status": "yes",
+      "comment": null,
+      "id": 3,
+      "updatedAt": "2026-02-26T19:11:07.642Z"
+    },
+    {
+      "eventId": 1,
+      "userId": "69947372-2c8d-46d9-9fba-71301bab4287",
+      "status": "maybe",
+      "comment": null,
+      "id": 4,
+      "updatedAt": "2026-02-26T19:11:32.136Z"
+    }
+  ],
+  "counters": {
+    "events": 4,
+    "attendance": 4
+  }
+}

@@ -47,7 +47,7 @@ export function GalleryGrid({ images, enableFilter = false }: Props) {
             key={img.name}
             type="button"
             onClick={() => setActiveImage(img)}
-            className="group overflow-hidden rounded-xl border border-black/5 bg-white shadow-card"
+            className="group relative overflow-hidden rounded-xl border border-black/5 bg-white shadow-card"
             aria-label={`Vis billede ${img.name}`}
           >
             <Image
@@ -58,6 +58,10 @@ export function GalleryGrid({ images, enableFilter = false }: Props) {
               className="h-56 w-full object-cover transition duration-300 group-hover:scale-105"
               loading="lazy"
             />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
+            <span className="pointer-events-none absolute bottom-2 right-2 rounded-md bg-white/90 px-2 py-1 text-xs font-semibold text-charcoal opacity-0 transition group-hover:opacity-100">
+              Klik for stor visning
+            </span>
           </button>
         ))}
       </div>

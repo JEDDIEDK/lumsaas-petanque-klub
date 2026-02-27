@@ -1,4 +1,6 @@
 import { addDays } from "date-fns";
+import { readdir } from "fs/promises";
+import path from "path";
 import { db } from "@/lib/db";
 import { getSeasonFromDate } from "@/lib/utils";
 import type { AnnouncementType, EventType, GalleryImage, MatchType, RankingRow } from "@/lib/types";
@@ -56,9 +58,21 @@ export const getLatestAnnouncements = async (_limit = 5): Promise<AnnouncementTy
   return [];
 };
 
-export const getGalleryImages = async (_limit = 24): Promise<GalleryImage[]> => {
-  void _limit;
-  return [];
+export const getGalleryImages = async (limit = 24): Promise<GalleryImage[]> => {
+  try {
+    const galleryDir = path.join(process.cwd(), "public", "images", "gallery");
+    const files = (await readdir(galleryDir))
+      .filter((name) => /\.(jpg|jpeg|png|webp)$/i.test(name))
+      .sort((a, b) => a.localeCompare(b, "da", { numeric: true }))
+      .slice(0, limit);
+
+    return files.map((name) => ({
+      name: name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " "),
+      publicUrl: `/images/gallery/${name}`
+    }));
+  } catch {
+    return [];
+  }
 };
 
 export const getMatchesBySeason = async (

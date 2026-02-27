@@ -32,7 +32,13 @@ export default async function SpilletiderPage() {
     if (dynamicEvents.length) {
       const usedDates = new Set(dynamicEvents.map((e) => e.date));
       const extra = fallbackEvents.filter((e) => !usedDates.has(e.date));
-      events = [...dynamicEvents, ...extra].slice(0, 6);
+      events = [...dynamicEvents, ...extra]
+        .sort((a, b) => {
+          const aTs = new Date(`${a.date}T${a.start_time}`).getTime();
+          const bTs = new Date(`${b.date}T${b.start_time}`).getTime();
+          return aTs - bTs;
+        })
+        .slice(0, 6);
       attendance = await db.attendance.findMany({
         where: { eventId: { in: dynamicEvents.map((e) => e.id) } }
       });

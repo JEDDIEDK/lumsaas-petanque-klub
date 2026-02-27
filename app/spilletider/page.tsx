@@ -87,7 +87,7 @@ export default async function SpilletiderPage() {
         <div className="mt-4 overflow-hidden rounded-lg border border-black/10">
           <iframe
             title="Lumsås Petanque Klub placering"
-            src="https://www.google.com/maps/place/Lums%C3%A5s+M%C3%B8lle/@55.9396997,11.5154809,17z?output=embed"
+            src="https://www.google.com/maps?q=55.9398659,11.5162344&hl=da&z=17&output=embed"
             className="h-80 w-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

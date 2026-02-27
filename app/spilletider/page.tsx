@@ -30,9 +30,11 @@ export default async function SpilletiderPage() {
   try {
     const dynamicEvents = await getUpcomingEvents(6);
     if (dynamicEvents.length) {
-      events = dynamicEvents;
+      const usedDates = new Set(dynamicEvents.map((e) => e.date));
+      const extra = fallbackEvents.filter((e) => !usedDates.has(e.date));
+      events = [...dynamicEvents, ...extra].slice(0, 6);
       attendance = await db.attendance.findMany({
-        where: { eventId: { in: events.map((e) => e.id) } }
+        where: { eventId: { in: dynamicEvents.map((e) => e.id) } }
       });
     }
   } catch {
